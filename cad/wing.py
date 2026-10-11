@@ -176,18 +176,18 @@ def _pair(name, local, y0, material, color, note):
 
 
 def parts():
-    out = [Part("wing_center", center_local(), center_frame(center_local()), "LW-PLA",
+    out = [Part("wing_center", center_local(), center_frame(center_local()), "PLA",
                 WING_COLOR, "Bolts to the fuselage with 2x M3; carries both spars.")]
     s1, s2, s3 = (panel_local(False), panel_local(True, servo=True), panel_local(True))
     ail, tip = aileron_local(), tip_local()
     y1, y2, y3 = CENTER_HALF, CENTER_HALF + PANEL_SPAN, CENTER_HALF + 2 * PANEL_SPAN
-    out += _pair("wing_s1", s1, y1, "LW-PLA", WING_COLOR, "Plain panel.")
-    out += _pair("wing_s2", s2, y2, "LW-PLA", WING_COLOR, "Aileron servo pocket (bottom).")
-    out += _pair("wing_s3", s3, y3, "LW-PLA", WING_COLOR, "Outer aileron panel.")
-    out += _pair("wing_tip", tip, TIP_Y0, "LW-PLA", WING_COLOR, "Upswept tip; print root down.")
-    out += _pair("aileron_inner", ail, y2, "LW-PLA", SURFACE_COLOR,
+    out += _pair("wing_s1", s1, y1, "PLA", WING_COLOR, "Plain panel.")
+    out += _pair("wing_s2", s2, y2, "PLA", WING_COLOR, "Aileron servo pocket (bottom).")
+    out += _pair("wing_s3", s3, y3, "PLA", WING_COLOR, "Outer aileron panel.")
+    out += _pair("wing_tip", tip, TIP_Y0, "PLA", WING_COLOR, "Upswept tip; print root down.")
+    out += _pair("aileron_inner", ail, y2, "PLA", SURFACE_COLOR,
                  "Joined to the outer aileron by a 3 mm carbon rod.")
-    out += _pair("aileron_outer", ail, y3, "LW-PLA", SURFACE_COLOR, "")
+    out += _pair("aileron_outer", ail, y3, "PLA", SURFACE_COLOR, "")
     for p in out:
         check(p.printed, p.name)
     return out

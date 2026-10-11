@@ -53,6 +53,14 @@ _Avoid_: Tail tube, tail boom (fine in prose, but not as a part name)
 **Boom socket**:
 The fairing under the pod's rear that the boom slides into.
 
+**Bowden cable**:
+A steel pushrod sliding inside a plastic tube, running through the boom from a tail servo in the pod to its control horn.
+_Avoid_: Pull-pull, cable, linkage (for this specific part)
+
+**Nose weight**:
+Lead fixed low in the nose to bring the CG onto its target.
+_Avoid_: Ballast (fine in prose), counterweight
+
 **Tail hub**:
 The flat-sided block at the end of the boom that carries the fin and both stab halves.
 _Avoid_: Tail block, empennage mount

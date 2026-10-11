@@ -71,6 +71,27 @@ def cyl_z(z0, z1, x, y, r, segments=48):
     return Manifold.cylinder(z1 - z0, r, circular_segments=segments).translate((x, y, z0))
 
 
+def segment(p0, p1, r, segments=16):
+    """Round rod from p0 to p1 (flat ends)."""
+    p0, p1 = np.asarray(p0, float), np.asarray(p1, float)
+    d = p1 - p0
+    length = float(np.linalg.norm(d))
+    z = d / length
+    helper = np.array([1.0, 0, 0]) if abs(z[0]) < 0.9 else np.array([0, 1.0, 0])
+    x = np.cross(helper, z)
+    x /= np.linalg.norm(x)
+    rot = np.column_stack([x, np.cross(z, x), z])
+    return transform(Manifold.cylinder(length, r, circular_segments=segments), rot, p0)
+
+
+def path(points, r, segments=16):
+    """Rod through a list of points, with ball joints so the bends stay closed."""
+    pts = [np.asarray(p, float) for p in points]
+    rods = [segment(a, b, r, segments) for a, b in zip(pts, pts[1:])]
+    balls = [Manifold.sphere(r, segments).translate(tuple(p)) for p in pts[1:-1]]
+    return union(rods + balls)
+
+
 def extrude(cs, z0, z1):
     return Manifold.extrude(cs, z1 - z0).translate((0, 0, z0))
 

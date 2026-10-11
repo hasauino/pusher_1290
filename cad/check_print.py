@@ -18,8 +18,11 @@ import numpy as np
 ROOT = Path(__file__).resolve().parent.parent
 LIMIT_DEG = 50.0
 BASELINE = {   # mm2 of accepted overhang per part type, after the printability pass
-    "fuse_1_nose": 3000, "fuse_2_front": 1050, "fuse_3_rear": 500, "tail_fin_hub": 900,
-    "wing_s2": 320, "fuse_hatch": 200, "fuse_4_tail_motor_cone": 170, "wing_center": 100,
+    "fuse_1_nose": 3100,            # camera-ring ceiling at the tip, nose-floor end
+    "fuse_2_front": 1100,           # wing-bolt boss teardrop, servo-rail ends
+    "fuse_3_rear": 500, "tail_fin_hub": 200,
+    "wing_s2": 460,                 # 36 x 12.6 mm servo-pocket ceiling (a short bridge)
+    "fuse_hatch": 200, "fuse_4_tail_motor_cone": 170, "wing_center": 100,
 }
 
 

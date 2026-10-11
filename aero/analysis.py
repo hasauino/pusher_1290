@@ -47,6 +47,14 @@ def level_flight(ap, flight, V):
                  D_induced=float(np.ravel(r["D_induced"])[0]))
 
 
+def min_level_speed(ap, flight, lo=7.0, hi=14.0, step=0.1):
+    """Slowest speed at which the model can still make lift equal to weight."""
+    for V in np.arange(lo, hi, step):
+        if level_flight(ap, flight, float(V)):
+            return float(V)
+    return float("nan")
+
+
 def performance(ap, flight, speeds=np.arange(10, 25.01, 0.5)):
     pts = [p for p in (level_flight(ap, flight, float(V)) for V in speeds) if p]
     best_ld = max(pts, key=lambda p: p.LD)

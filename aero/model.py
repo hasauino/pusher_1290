@@ -26,10 +26,10 @@ WING_AIRFOIL = asb.Airfoil(P.WING_AIRFOIL, coordinates=str(DATA / f"{P.WING_AIRF
 
 @dataclass
 class Flight:
-    mass: float = 2.3                  # kg, all-up with a 4S6P Li-ion pack
+    mass: float = 1.84                 # kg, all-up: PLA build + 4S LiPo + nose weight (cad/assembly.py)
     cg_from_le: float = 66.0           # mm behind the wing LE (root)
     prop_efficiency: float = 0.55      # motor x ESC x prop, cruise
-    battery_wh: float = 4 * 3.6 * 21.0 * 0.85   # 4S6P Li-ion, 85 % usable
+    battery_wh: float = 14.8 * 5.2 * 0.85        # 4S 5200 mAh LiPo, 85 % usable
 
     @property
     def x_cg(self):

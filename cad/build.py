@@ -13,6 +13,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 import fuselage  # noqa: E402
 import hardware  # noqa: E402
+import mass  # noqa: E402
 import tail  # noqa: E402
 import wing  # noqa: E402
 from geom import mesh_arrays, rot_z, transform, union, write_stl  # noqa: E402
@@ -22,8 +23,6 @@ from PIL import Image, ImageDraw  # noqa: E402
 from render import render  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
-LW_PLA_DENSITY = 0.55   # g/cm3, foamed
-PETG_DENSITY = 1.27
 
 
 def place_on_bed(man):
@@ -66,8 +65,8 @@ def main():
     stl_dir, asm_dir, img_dir = ROOT / "stl", ROOT / "assembly", ROOT / "renders"
     for d in (stl_dir, asm_dir, img_dir):
         d.mkdir(exist_ok=True)
-        for old in d.glob("*.stl"):
-            old.unlink()
+    for old in stl_dir.glob("*.stl"):      # part files only; assembly/ also holds cad/assembly.py's output
+        old.unlink()
 
     rows, failures, printed = [], [], []
     for i, p in enumerate(parts, 1):
@@ -75,21 +74,21 @@ def main():
         fname = f"{i:02d}_{p.name}.stl"
         write_stl(on_bed, stl_dir / fname)
         printed.append((fname, on_bed, p.color))
-        density = PETG_DENSITY if p.material == "PETG" else LW_PLA_DENSITY
-        rows.append((fname, p.material, dims, p.printed.volume() / 1000 * density, p.note))
+        density = mass.DENSITY["PETG" if p.material == "PETG" else mass.DESIGN_FILAMENT]
+        rows.append((fname, p.material, dims, mass.printed_cm3(p) * density, p.note))
         if not fits(dims):
             failures.append(f"{p.name}: {dims[0]:.1f} x {dims[1]:.1f} x {dims[2]:.1f}")
 
     write_stl(union([p.assembly for p in parts]), asm_dir / "pusher_1290.stl")
 
     with open(stl_dir / "PARTS.md", "w") as f:
-        f.write("| File | Material | X x Y x Z on bed (mm) | Solid-model mass* (g) | Notes |\n")
+        f.write("| File | Material | X x Y x Z on bed (mm) | Printed mass* (g) | Notes |\n")
         f.write("|---|---|---|---|---|\n")
-        for fname, mat, d, mass, note in rows:
-            f.write(f"| {fname} | {mat} | {d[0]:.0f} x {d[1]:.0f} x {d[2]:.0f} | {mass:.0f} | {note} |\n")
-        f.write("\n*Upper bound: assumes the model is printed fully solid. Wing panels and "
-                "fuselage shells are modelled at their true wall thickness, so they come out close "
-                "to this figure; solid parts (tips, tail, ailerons) print far lighter at 8-10 % infill.\n")
+        for fname, mat, d, grams, note in rows:
+            f.write(f"| {fname} | {mat} | {d[0]:.0f} x {d[1]:.0f} x {d[2]:.0f} | {grams:.0f} | {note} |\n")
+        f.write(f"\n*Estimate in {mass.DESIGN_FILAMENT} (PETG where marked) with the README print settings: "
+                "wing panels and fuselage shells are modelled at their true wall thickness; solid parts "
+                "(tips, tail, ailerons) print with one wall and 5 % infill.\n")
 
     items = [(p.assembly, p.color) for p in parts] + [(c.shape, c.color) for c in hardware.components()]
     render(items, (-1, 1.3, -0.8), (0, 0, 1), img_dir / "iso_front.png")
@@ -99,8 +98,8 @@ def main():
     render(items, (1, 0, 0), (0, 0, 1), img_dir / "front.png", size=(1600, 600))
     parts_sheet(printed, img_dir / "parts_sheet.png")
 
-    for fname, mat, d, mass, _ in rows:
-        print(f"{fname:38s} {mat:6s} {d[0]:6.1f} x {d[1]:6.1f} x {d[2]:6.1f}  {mass:5.0f} g")
+    for fname, mat, d, grams, _ in rows:
+        print(f"{fname:38s} {mat:6s} {d[0]:6.1f} x {d[1]:6.1f} x {d[2]:6.1f}  {grams:5.0f} g")
     print(f"\n{len(rows)} parts.")
     if failures:
         print("DOES NOT FIT:\n  " + "\n  ".join(failures))

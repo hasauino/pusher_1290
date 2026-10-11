@@ -1,7 +1,7 @@
 """Fuselage pod: a superellipse loft that rises into a motor cone at the back,
 with a boom socket below it (the Lark-style notch the prop spins in).
 
-The pod is a 1.2 mm shell. It is cut into segments that print standing on
+The pod is a thin shell (WALL). It is cut into segments that print standing on
 their rear face; each segment carries a glue sleeve ("lip") that slides into
 the one in front of it.
 """
@@ -124,7 +124,12 @@ def build():
     bosses = wing.center_frame(union(bosses)) ^ outer
     inserts = wing.center_frame(union(inserts))
 
-    floor = inner_fused ^ box(92, -80, FLOOR_Z, 300, 80, FLOOR_Z + FLOOR_T)
+    floor = inner_fused ^ box(FLOOR_X0, -80, FLOOR_Z, 300, 80, FLOOR_Z + FLOOR_T)
+    # Rails that hold the two tail servos upright, side by side (glue them in).
+    z_top = FLOOR_Z + FLOOR_T
+    rails = union([box(TAIL_SERVO_X0, y0, z_top - 0.5, TAIL_SERVO_X0 + 22.8, y1, z_top + 10)
+                   for y0, y1 in ((-18.2, -16.6), (-3.6, 3.6), (16.6, 18.2))]) ^ inner_fused
+    floor = floor + rails
 
     # Camera cage: a square tube behind the lens hole, braced to the shell by
     # two cross ribs. All walls run along X, so they print vertically, and the
@@ -161,7 +166,7 @@ def build():
     body = body + ledge
 
     keepout = union([wing.envelope(0.5 + SADDLE_T), bosses,
-                     box(80, -80, FLOOR_Z - 0.3, 310, 80, FLOOR_Z + FLOOR_T + 0.3)])
+                     box(FLOOR_X0 - 10, -80, FLOOR_Z - 0.3, 310, 80, FLOOR_Z + FLOOR_T + 0.3)])
     return body, hatch, keepout
 
 
@@ -172,9 +177,9 @@ def motor_mount():
     flange = loft([ring(MOTOR_X, w, zb, zt), ring(MOTOR_X + 2, w, zb, zt)])
     mount = plug + flange
     mount = mount - cyl_x(MOTOR_X - 10, MOTOR_X + 5, 0, MOTOR_Z, 5)
-    for dy, dz in ((8, 0), (-8, 0), (0, 9.5), (0, -9.5)):         # 16 x 19 mm cross pattern
+    for dy, dz in MOTOR_HOLES:
         mount = mount - cyl_x(MOTOR_X - 10, MOTOR_X + 5, dy, MOTOR_Z + dz, 1.6)
-    mount = mount - cyl_x(MOTOR_X - 10, MOTOR_X + 5, 6.5, MOTOR_Z - 6.5, 3)  # motor wires
+    mount = mount - cyl_x(MOTOR_X - 10, MOTOR_X + 5, 0, MOTOR_Z - 11, 3)  # motor wires
     return mount
 
 
@@ -199,11 +204,11 @@ def parts():
             for suffix, p, note in (("motor_cone", pieces[0], "Print in PETG/PLA: carries the motor."),
                                     ("boom_socket", pieces[1], "Boom tail of the socket; the boom aligns it.")):
                 out.append(Part(f"{name}_{suffix}", transform(p, up_is_forward), p,
-                                "PETG" if suffix == "motor_cone" else "LW-PLA",
+                                "PETG" if suffix == "motor_cone" else "PLA",
                                 COLOR, note))
             continue
-        out.append(Part(name, transform(seg, up_is_forward), seg, "LW-PLA", COLOR, notes[i]))
-    out.append(Part("fuse_hatch", transform(hatch, up_is_forward), hatch, "LW-PLA", COLOR,
+        out.append(Part(name, transform(seg, up_is_forward), seg, "PLA", COLOR, notes[i]))
+    out.append(Part("fuse_hatch", transform(hatch, up_is_forward), hatch, "PLA", COLOR,
                     "Battery hatch: front tab hooks under the skin; tape or a magnet at the back."))
     mm = motor_mount()
     out.append(Part("motor_mount", transform(mm, up_is_forward), mm, "PETG", HARD_COLOR,

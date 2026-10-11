@@ -18,14 +18,14 @@ sys.path.insert(0, str(Path(__file__).parent))
 import build  # noqa: E402
 import fuselage  # noqa: E402
 import hardware  # noqa: E402
+import mass  # noqa: E402
 import tail  # noqa: E402
 import wing  # noqa: E402
 from geom import mesh_arrays  # noqa: E402
 
 MANUAL = Path(__file__).resolve().parent.parent / "manual"
 OUT = MANUAL / "models.json"
-SOLID_PARTS = ("wing_tip", "aileron", "tail_")   # printed with infill, not modelled as shells
-LW_PLA, PLA, PETG = 0.55, 1.24, 1.27
+LW_PLA, PLA, PETG = (mass.DENSITY[k] for k in ("LW-PLA", "PLA", "PETG"))
 
 
 def b64(a):
@@ -40,16 +40,6 @@ def pack(man):
     wide = len(v) > 65535
     return {"min": lo.round(3).tolist(), "span": span.round(3).tolist(), "pos": b64(q),
             "idx": b64(t.astype("<u4" if wide else "<u2")), "wide": wide}
-
-
-def printed_cm3(p):
-    """Estimated printed volume: shells are modelled at true wall thickness;
-    solid parts print as 2 walls (~0.84 mm) plus 8 % infill."""
-    v = p.printed.volume() / 1000
-    if not p.name.startswith(SOLID_PARTS):
-        return v
-    shell = p.printed.surface_area() * 0.84 / 1000
-    return min(v, shell + 0.08 * max(v - shell, 0))
 
 
 def group(name):
@@ -96,7 +86,7 @@ def main():
     out = {"bed": build.BED, "parts": [], "hardware": []}
     for i, p in enumerate(parts, 1):
         on_bed, dims = build.place_on_bed(p.printed)
-        cm3 = printed_cm3(p)
+        cm3 = mass.printed_cm3(p)
         rho = PETG if p.material == "PETG" else LW_PLA
         out["parts"].append({
             "name": p.name, "file": f"{i:02d}_{p.name}.stl", "group": group(p.name),
@@ -112,8 +102,8 @@ def main():
     render_page(out["parts"])
     if args.site:
         write_site(args.site)
-    total = sum(p["grams"] for p in out["parts"])
-    print(f"{len(parts)} parts, {OUT.stat().st_size / 1e6:.1f} MB, printed mass ~{total} g LW-PLA")
+    total = sum(p["grams_pla"] for p in out["parts"])
+    print(f"{len(parts)} parts, {OUT.stat().st_size / 1e6:.1f} MB, printed mass ~{total} g PLA")
 
 
 def render_page(parts):
@@ -128,10 +118,10 @@ def render_page(parts):
         buttons.append(f'        <div class="part-group"><h3>{g}</h3>\n' + "\n".join(rows) + "\n        </div>")
     rows = []
     for p in parts:
-        tag = '<span class="tag petg">PETG</span>' if p["material"] == "PETG" else '<span class="tag">LW-PLA / PLA</span>'
+        tag = '<span class="tag petg">PETG</span>' if p["material"] == "PETG" else '<span class="tag">PLA</span>'
         dims = " × ".join(f"{d:.0f}" for d in p["dims"])
         rows.append(f'          <tr><td><code>{p["file"]}</code></td><td>{tag}</td><td class="num">{dims}</td>'
-                    f'<td class="num">{p["grams"]}</td><td class="num">{p["grams_pla"]}</td></tr>')
+                    f'<td class="num">{p["grams_pla"]}</td><td class="num">{p["grams"]}</td></tr>')
     page = (MANUAL / "template.html").read_text()
     for key, val in {"{{PART_BUTTONS}}": "\n".join(buttons), "{{PART_ROWS}}": "\n".join(rows),
                      "{{PART_COUNT}}": str(len(parts)),

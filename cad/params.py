@@ -14,8 +14,8 @@ CHORD = 200.0
 WING_LE_X = 200.0
 WING_LE_Z = 140.0
 INCIDENCE = 1.5      # wing incidence relative to the boom / tail
-SKIN = 0.8           # wing skin = 2 perimeters of a 0.4 nozzle
-WEB = 0.8            # internal span-wise webs
+SKIN = 0.45          # wing skin = 1 PLA perimeter (0.45 mm line)
+WEB = 0.45           # internal span-wise webs, 1 perimeter
 TE_THICK = 0.6       # minimum printable trailing edge
 LE_WEB_X = 16.0
 SPAR_X, SPAR_D = 50.0, 10.0              # main spar, carbon tube
@@ -37,8 +37,11 @@ BEVEL_DEG = 30.0     # control-surface V bevel -> +/-30 deg throw
 AILERON_JOINER_D = 3.0
 AILERON_JOINER_X = HINGE_X + 8.0
 
-SERVO_POCKET = (25.0, 33.0, 12.5)   # chord, span, depth: EMAX ES08MA II lying flat
-SERVO_POCKET_X0 = 79.0
+# 9 g micro servo (SG90 / MG90S) lying flat: its height (32 mm to the spline,
+# plus the horn hub) runs along the pocket's long side, the 32.5 mm ear span
+# along the short side, and its 12.2 mm thickness into the surface.
+SERVO_POCKET = (36.0, 33.5, 12.6)   # long side, ear side, depth (servo is 12.2 thick)
+SERVO_POCKET_X0 = 60.0              # wing: between the main spar sleeve and the rear spar
 SERVO_POCKET_Z0 = 25.0              # from the root end of S2
 
 BOLT_X = (30.0, 135.0)   # wing-to-fuselage M3 bolts, chord stations on Y=0
@@ -48,10 +51,11 @@ INSERT_D = 4.1           # M3 heat-set insert
 INSERT_DEPTH = 7.0
 
 # --- Fuselage ------------------------------------------------------------------
-WALL = 1.2               # fuselage shell = 3 perimeters
+WALL = 0.8               # fuselage shell = 2 PLA perimeters
 SUPER_N = 2.5            # superellipse exponent of the cross sections
 MOTOR_Z = 120.0
 MOTOR_X = 445.0          # rear face of the fuselage cone = motor mount seat
+MOTOR_HOLES = [(sy * 9.5, sz * 9.5) for sy in (-1, 1) for sz in (-1, 1)]   # 19 x 19 mm M3 (2806/2807 motors)
 # Control stations: x, width, z_bottom, z_top. Between the wing LE and TE the
 # top follows the wing camber line instead (the wing sits in a saddle).
 # The nose tip sits low; the top line is a convex arc that levels off into the
@@ -72,6 +76,7 @@ LIP_FIT = 0.15
 HATCH_X = (100.0, 198.0)
 HATCH_Z = 85.0
 FLOOR_Z = 14.0
+FLOOR_X0 = 46.0         # the floor runs forward into the nose so the battery can sit far forward
 FLOOR_T = 1.6
 SADDLE_T = 3.0
 SADDLE_WINDOW_X = (245.0, 322.0)
@@ -112,3 +117,7 @@ FIN_TIP_LE = 750.0
 FIN_THICK = 0.12
 RUDDER_HINGE_X = 815.0
 RUDDER_Z0 = HUB_Z1
+BOWDEN_D = 2.0           # tail servo cables: 2 mm OD tube with a 1 mm steel pushrod inside
+
+# Tail servos (elevator, rudder) stand upright side by side in the pod, just behind the battery.
+TAIL_SERVO_X0 = 194.0    # front of the servo rails

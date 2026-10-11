@@ -222,9 +222,9 @@ footer .wrap { display: grid; gap: 8px; }
       <div><dt>Wingspan</dt><dd>1290 <small>mm</small></dd></div>
       <div><dt>Length</dt><dd>865 <small>mm</small></dd></div>
       <div><dt>Wing</dt><dd>SD7037 <small>200 mm chord</small></dd></div>
-      <div><dt>Printed parts</dt><dd>{{PART_COUNT}} <small>~{{MASS_LW}} g LW-PLA</small></dd></div>
-      <div><dt>All-up weight</dt><dd>2.1–2.4 <small>kg</small></dd></div>
-      <div><dt>Best glide</dt><dd>15.7 <small>L/D at 61 km/h</small></dd></div>
+      <div><dt>Printed parts</dt><dd>{{PART_COUNT}} <small>~{{MASS_PLA}} g PLA</small></dd></div>
+      <div><dt>All-up weight</dt><dd>1.84 <small>kg, 4S 5200 mAh</small></dd></div>
+      <div><dt>Best glide</dt><dd>15.3 <small>L/D at 54 km/h</small></dd></div>
     </dl>
   </div>
 </header>
@@ -259,15 +259,15 @@ footer .wrap { display: grid; gap: 8px; }
     <div class="section-head">
       <span class="eyebrow">Bill of materials</span>
       <h2>What to print and what to buy</h2>
-      <p>Print one of each file. Left and right parts are separate files, mirrored. Weights are estimates for the print settings below.</p>
+      <p>Print one of each file; left and right parts are separate, mirrored files. Weights are estimates for the print settings below. Everything to buy is a common part you can order on Amazon, listed by the name to search for.</p>
     </div>
     <div class="table-box">
       <table>
-        <thead><tr><th>File</th><th>Material</th><th class="num">Size on plate (mm)</th><th class="num">LW-PLA (g)</th><th class="num">PLA (g)</th></tr></thead>
+        <thead><tr><th>File</th><th>Material</th><th class="num">Size on plate (mm)</th><th class="num">PLA (g)</th><th class="num">LW-PLA (g)</th></tr></thead>
         <tbody>
 {{PART_ROWS}}
         </tbody>
-        <tfoot><tr><td>{{PART_COUNT}} parts</td><td></td><td></td><td class="num">{{MASS_LW}}</td><td class="num">{{MASS_PLA}}</td></tr></tfoot>
+        <tfoot><tr><td>{{PART_COUNT}} parts</td><td></td><td></td><td class="num">{{MASS_PLA}}</td><td class="num">{{MASS_LW}}</td></tr></tfoot>
       </table>
     </div>
     <div class="two">
@@ -275,40 +275,40 @@ footer .wrap { display: grid; gap: 8px; }
         <table>
           <thead><tr><th>Carbon and hardware</th><th>Quantity</th></tr></thead>
           <tbody>
-            <tr><td>Carbon tube 10 mm OD, main spar</td><td>1 × 1000 mm</td></tr>
-            <tr><td>Carbon tube 6 mm OD, rear spar</td><td>2 × 590 mm</td></tr>
-            <tr><td>Carbon tube 12 mm OD, tail boom</td><td>1 × 490 mm</td></tr>
-            <tr><td>Carbon tube 6 mm OD, stabiliser spar</td><td>1 × 130 mm</td></tr>
-            <tr><td>Carbon rod 3 mm, stabiliser pin</td><td>1 × 80 mm</td></tr>
-            <tr><td>Carbon rod 3 mm, aileron joiners</td><td>2 × 80 mm</td></tr>
-            <tr><td>Piano wire or carbon rod 2 mm, elevator joiner</td><td>1 × 100 mm</td></tr>
-            <tr><td>M3 heat-set inserts</td><td>2</td></tr>
-            <tr><td>M3 × 20 and M3 × 14 bolts (wing)</td><td>1 each</td></tr>
-            <tr><td>M3 × 14 bolts (motor)</td><td>4</td></tr>
-            <tr><td>Polyester or CA hinges</td><td>~14</td></tr>
-            <tr><td>Control horns and 1.2 mm pushrods</td><td>4 each</td></tr>
+            <tr><td>Carbon tube 10 × 8 mm (main spar)</td><td>1 × 1000 mm</td></tr>
+            <tr><td>Carbon tube 6 × 4 mm (rear spars, stab spar)</td><td>2 × 590 mm, 1 × 130 mm</td></tr>
+            <tr><td>Carbon tube 12 × 10 mm (boom)</td><td>1 × 490 mm</td></tr>
+            <tr><td>Carbon rod 3 mm (stab pin, aileron joiners)</td><td>3 × 80 mm</td></tr>
+            <tr><td>Piano wire 2 mm (elevator joiner)</td><td>1 × 100 mm</td></tr>
+            <tr><td>Bowden cable: 2 mm tube with 1 mm steel pushrod (elevator, rudder)</td><td>2 × ~700 mm</td></tr>
+            <tr><td>Steel pushrod 1.2 mm with clevis (ailerons)</td><td>2</td></tr>
+            <tr><td>Nylon control horns</td><td>4</td></tr>
+            <tr><td>CA hinges</td><td>~14</td></tr>
+            <tr><td>M3 brass heat-set inserts (5.7 mm)</td><td>2</td></tr>
+            <tr><td>M3 socket head screws</td><td>1 × 20 mm, 5 × 14 mm (wing rear, motor)</td></tr>
+            <tr><td>Adhesive lead wheel weights (nose weight)</td><td>~92 g</td></tr>
             <tr><td>Magnet 6 × 3 mm (hatch)</td><td>1</td></tr>
           </tbody>
         </table>
       </div>
       <div class="table-box">
         <table>
-          <thead><tr><th>Electronics</th><th>Suggested</th></tr></thead>
+          <thead><tr><th>Electronics</th><th>Search for</th></tr></thead>
           <tbody>
-            <tr><td>Motor</td><td>28xx class, e.g. 1300 KV</td></tr>
-            <tr><td>Propeller</td><td>7 × 4 to 7 × 6, pusher</td></tr>
-            <tr><td>ESC</td><td>30–40 A</td></tr>
-            <tr><td>Servos</td><td>4 × EMAX ES08MA II size (ailerons, elevator, rudder)</td></tr>
-            <tr><td>Flight controller</td><td>F405 wing FC or any MAVLink FC</td></tr>
-            <tr><td>GPS</td><td>M10 with compass</td></tr>
-            <tr><td>Receiver</td><td>ELRS or similar</td></tr>
-            <tr><td>Camera and VTX</td><td>19 × 19 mm camera, digital or analog VTX</td></tr>
-            <tr><td>Battery</td><td>2 × 4S3P 18650 packs in parallel (each ~75 × 56 × 65 mm, to fit through the hatch)</td></tr>
+            <tr><td>Motor</td><td>EMAX ECO II 2807 1300KV (19 × 19 mm M3 mount)</td></tr>
+            <tr><td>Propeller</td><td>7 inch FPV prop, reverse rotation (e.g. 7040)</td></tr>
+            <tr><td>ESC</td><td>Hobbywing Skywalker V2 40A (5 A BEC)</td></tr>
+            <tr><td>Servos</td><td>4 × MG90S metal-gear 9 g micro servo</td></tr>
+            <tr><td>Flight controller</td><td>SpeedyBee F405 WING APP</td></tr>
+            <tr><td>GPS</td><td>Beitian BN-880 (with compass)</td></tr>
+            <tr><td>Receiver</td><td>RadioMaster RP1 ELRS 2.4 GHz</td></tr>
+            <tr><td>Camera and VTX</td><td>Caddx Ratel 2 (19 mm) and a 5.8 GHz VTX (30.5 mm mounting)</td></tr>
+            <tr><td>Battery</td><td>4S 5200 mAh LiPo, XT60, at most 140 × 48 × 48 mm</td></tr>
           </tbody>
         </table>
       </div>
     </div>
-    <p class="hint">The motor mount uses a 16 × 19 mm M3 cross pattern with a 10 mm centre hole. Check it against your motor before printing <code>20_motor_mount.stl</code>.</p>
+    <p class="hint">The motor mount takes the standard 19 × 19 mm M3 pattern of 2806/2807 motors, with a 10 mm centre hole. If you buy a different motor, check its pattern before printing <code>20_motor_mount.stl</code>.</p>
   </div>
 </section>
 
@@ -323,23 +323,23 @@ footer .wrap { display: grid; gap: 8px; }
       <table>
         <thead><tr><th>Parts</th><th class="num">Wall loops</th><th class="num">Infill</th><th class="num">Top / bottom</th><th>Why</th></tr></thead>
         <tbody>
-          <tr><td>Wing centre, S1, S2, S3</td><td class="num">2</td><td class="num">0 %</td><td class="num">3</td><td>The spars and internal walls are modelled in.</td></tr>
-          <tr><td>Wing tips, ailerons, stabiliser, elevators, rudder, fin hub</td><td class="num">2</td><td class="num">8 % gyroid</td><td class="num">3</td><td>Solid parts. Add a 5 mm brim to the tall thin ones.</td></tr>
-          <tr><td>Fuselage segments, hatch</td><td class="num">3</td><td class="num">10 % gyroid</td><td class="num">3</td><td>1.2 mm shell. Infill only fills the boom-socket walls.</td></tr>
+          <tr><td>Wing centre, S1, S2, S3</td><td class="num">1</td><td class="num">0 %</td><td class="num">3</td><td>0.45 mm skin and internal walls are modelled in; set the wall line width to 0.45 mm.</td></tr>
+          <tr><td>Wing tips, ailerons, stabiliser, elevators, rudder, fin hub</td><td class="num">1</td><td class="num">5 % gyroid</td><td class="num">3</td><td>Solid parts. Add a 5 mm brim to the tall thin ones.</td></tr>
+          <tr><td>Fuselage segments, hatch</td><td class="num">2</td><td class="num">10 % gyroid</td><td class="num">3</td><td>0.8 mm shell. Infill only fills the boom-socket walls.</td></tr>
           <tr><td>Motor mount, motor cone</td><td class="num">4</td><td class="num">40 %</td><td class="num">4</td><td>Print in PETG: they carry the motor and run warm.</td></tr>
         </tbody>
       </table>
     </div>
     <div class="two">
       <div class="note">
-        <h3>LW-PLA or PLA</h3>
-        <p>The walls are sized for foamed lightweight PLA such as Bambu PLA Aero (about {{MASS_LW}} g of printed parts). Regular PLA prints them fine but weighs about {{MASS_PLA}} g, which needs more power and shortens flights by roughly a third. For PLA, thinner walls (a 0.45 mm single-line wing skin and a 0.8 mm fuselage) bring that down to about 900 g.</p>
+        <h3>Designed for PLA</h3>
+        <p>The walls are sized for regular PLA: about {{MASS_PLA}} g of printed parts. Foamed PLA (LW-PLA, Bambu PLA Aero) also works and weighs about {{MASS_LW}} g, but then the plane is nose-heavy: leave out the nose weight and move the battery about 30 mm back.</p>
       </div>
       <div class="note">
         <h3>Before you print</h3>
         <ul class="clean">
           <li>Use a brim on <code>16_fuse_3_rear</code>: it stands on a thin ring next to the boom-socket column.</li>
-          <li>Turn on thick bridges if your printer bridges poorly. The servo-pocket ceilings and the ring around the camera hole are short bridges.</li>
+          <li>Turn on thick bridges if your printer bridges poorly. The servo-pocket ceilings in S2 and the ring around the camera hole are short bridges.</li>
           <li>PLA softens around 55 °C. Don't leave the plane in a hot car.</li>
         </ul>
       </div>
@@ -358,33 +358,33 @@ footer .wrap { display: grid; gap: 8px; }
       <video controls preload="metadata" playsinline poster="assembly-poster.jpg">
         <source src="assembly.mp4" type="video/mp4">
       </video>
-      <figcaption>The whole build in 1 min 45 s, seen from the workbench. The video builds the fuselage first and fits the wing last; the six steps below join the same parts in a different order, and either order works.</figcaption>
+      <figcaption>The whole build, seen from the workbench. The video builds the fuselage first and fits the wing last; the six steps below join the same parts in a different order, and either order works.</figcaption>
     </figure>
     <div class="build">
       <ol class="steps" id="steps">
         <li><button type="button" class="step" data-parts="wing_center wing_s wing_tip" data-group="Wing" aria-pressed="true">
           <h3>Build the wing</h3>
-          <p>Slide the 10 mm main spar and both 6 mm rear spars through the centre section, then S1, S2 and S3 on each side, gluing each joint. Glue the tips on; the rear spars end 35 mm inside them. Lay the aileron servos flat in the pockets under S2 and run the leads through the wing to the holes under the centre section.</p>
+          <p>Slide the 10 mm main spar and both 6 mm rear spars through the centre section, then S1, S2 and S3 on each side, gluing each joint. Glue the tips on; the rear spars end 35 mm inside them. Lay an MG90S servo flat in each pocket under S2, spline toward the trailing edge, and run its lead through the wing to the holes under the centre section.</p>
         </button></li>
         <li><button type="button" class="step" data-parts="aileron" aria-pressed="false">
           <h3>Fit the ailerons</h3>
-          <p>Glue a 3 mm carbon rod through the inner and outer aileron on each side so they move as one. Hinge them along the point of the bevel, which allows ±30° of throw, then tape over the hinge gap.</p>
+          <p>Glue a 3 mm carbon rod through the inner and outer aileron on each side so they move as one. Hinge them along the point of the bevel, which allows ±30° of throw, then tape over the hinge gap. Glue a horn under each inner aileron and link it to the servo horn with a 1.2 mm Z-bend pushrod.</p>
         </button></li>
         <li><button type="button" class="step" data-parts="fuse_ motor_mount" data-group="Fuselage" aria-pressed="false">
           <h3>Assemble the fuselage</h3>
-          <p>Glue the front and rear segments and both tail-cone pieces together on their 10 mm sleeves. Leave the nose unglued so you can reach the camera. Melt the two M3 inserts into the bosses under the wing saddle. Bolt the motor to the mount, then glue the mount into the cone.</p>
+          <p>Glue the front and rear segments and both tail-cone pieces together on their 10 mm sleeves. Melt the two M3 inserts into the bosses under the wing saddle. Glue the elevator and rudder servos upright between the floor rails, and the flight controller and ESC behind them. Bolt the motor to the mount, then glue the mount into the cone. Leave the nose unglued: the battery slides in along the floor with the nose off.</p>
         </button></li>
         <li><button type="button" class="step" data-parts="fuse_4_tail_boom_socket tail_fin_hub" data-group="Boom" aria-pressed="false">
           <h3>Fit the boom</h3>
-          <p>Glue the 12 mm boom 160 mm into the fuselage socket and 110 mm into the tail hub. Square the fin to the wing before the glue sets. Tail servo leads run inside the boom.</p>
+          <p>Glue the 12 mm boom 160 mm into the fuselage socket and 110 mm into the tail hub. Square the fin to the wing before the glue sets. Then push the two Bowden cables from the tail servos through the boom: they come out of the hub beside the elevator and the rudder.</p>
         </button></li>
         <li><button type="button" class="step" data-parts="tail_" data-group="Tail" aria-pressed="false">
           <h3>Build the tail</h3>
-          <p>Slide the stabiliser halves onto the 6 mm spar and 3 mm pin through the hub. Hinge the elevators and join them with the 2 mm rod through the hub slot, then hinge the rudder. The elevator servo goes in the left fin pocket and the rudder servo in the right.</p>
+          <p>Slide the stabiliser halves onto the 6 mm spar and 3 mm pin through the hub. Hinge the elevators and join them with the 2 mm wire through the hub slot, then hinge the rudder. Glue a horn under the left elevator and one on the right of the rudder, and Z-bend the Bowden pushrods into them.</p>
         </button></li>
         <li><button type="button" class="step" data-parts="*" aria-pressed="false">
           <h3>Mount the wing and balance</h3>
-          <p>Seat the wing in the saddle with the M3 × 20 bolt at the front and the M3 × 14 at the back. Hook the hatch's front tab under the skin and press its back onto the ledge. Balance the plane at 66 mm behind the wing's leading edge.</p>
+          <p>Seat the wing in the saddle with the M3 × 20 bolt at the front and the M3 × 14 at the back. Slide the battery in, fit the nose and the hatch, then balance the plane at 66 mm behind the wing's leading edge. With PLA parts and a 4S 5200 mAh LiPo that takes about 92 g of lead in the nose, below the camera: add or remove weight until it balances.</p>
         </button></li>
       </ol>
       <div class="build-view">
@@ -399,21 +399,21 @@ footer .wrap { display: grid; gap: 8px; }
     <div class="section-head">
       <span class="eyebrow">Flight setup</span>
       <h2>Balance, throws and speeds</h2>
-      <p>Figures come from the aerodynamic model at 2.3 kg. The design is not flight-tested, so range-check it, verify the balance and do a few gentle hand-launched glides before the first powered flight.</p>
+      <p>Figures come from the aerodynamic model at 1.84 kg. The design is not flight-tested, so range-check it, verify the balance and do a few gentle hand-launched glides before the first powered flight.</p>
     </div>
     <div class="figures">
       <div class="figure"><span>Balance point, behind the wing's leading edge</span><strong>66 mm</strong><span>Safe range 57–77 mm</span></div>
-      <div class="figure"><span>Best glide (range)</span><strong>17 m/s</strong><span>61 km/h, L/D 15.7</span></div>
-      <div class="figure"><span>Longest flight time</span><strong>13.5 m/s</strong><span>49 km/h, about 43 W</span></div>
-      <div class="figure"><span>Slowest level flight</span><strong>10.5 m/s</strong><span>38 km/h at 2.3 kg</span></div>
+      <div class="figure"><span>Best glide (range)</span><strong>15 m/s</strong><span>54 km/h, L/D 15.3</span></div>
+      <div class="figure"><span>Longest flight time</span><strong>12 m/s</strong><span>43 km/h, about 32 W</span></div>
+      <div class="figure"><span>Slowest level flight</span><strong>9.3 m/s</strong><span>33 km/h at 1.84 kg</span></div>
     </div>
     <div class="table-box">
       <table>
         <thead><tr><th>Control</th><th class="num">First-flight throw</th><th>Servo</th></tr></thead>
         <tbody>
           <tr><td>Ailerons</td><td class="num">±12°</td><td>One per side, in S2</td></tr>
-          <tr><td>Elevator</td><td class="num">±10°</td><td>Left fin pocket</td></tr>
-          <tr><td>Rudder</td><td class="num">±15°</td><td>Right fin pocket (optional)</td></tr>
+          <tr><td>Elevator</td><td class="num">±10°</td><td>In the pod, Bowden cable through the boom</td></tr>
+          <tr><td>Rudder</td><td class="num">±15°</td><td>In the pod, Bowden cable through the boom</td></tr>
         </tbody>
       </table>
     </div>
@@ -627,7 +627,7 @@ footer .wrap { display: grid; gap: 8px; }
       document.getElementById("pi-mat").textContent = p.material;
       document.getElementById("pi-size").textContent = p.dims.map(d => d.toFixed(0)).join(" × ") + " mm";
       document.getElementById("pi-mass").textContent = p.material === "PETG"
-        ? `${p.grams} g PETG` : `${p.grams} g LW-PLA · ${p.grams_pla} g PLA`;
+        ? `${p.grams} g PETG` : `${p.grams_pla} g PLA · ${p.grams} g LW-PLA`;
       document.getElementById("pi-note").textContent = p.note || "—";
       const box = new THREE.Box3(new THREE.Vector3(0, 0, 0), new THREE.Vector3(data.bed, data.bed, data.bed * 0.6));
       bedView.fit(box, [-0.9, -1.3, 0.95], 0.95);

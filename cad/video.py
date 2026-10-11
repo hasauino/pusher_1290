@@ -26,6 +26,7 @@ import hardware  # noqa: E402
 import tail  # noqa: E402
 import wing  # noqa: E402
 from geom import mesh_arrays  # noqa: E402
+from params import MOTOR_HOLES  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 W, H, FPS = 1920, 1080, 30
@@ -114,25 +115,25 @@ STEPS = [
         ("Melt the two M3 heat-set inserts into the saddle bosses",
          [[("Heat-set insert front", (0, 0, 70)), ("Heat-set insert rear", (0, 0, 70))]]),
     ]),
-    ("Electronics", (-820, -170, 520), (200, 0, 60), 30, [
-        ("Press the camera into the nose cage, then slide the nose on",
-         [[("FPV camera", (-80, 0, 0)), ("fuse_1_nose", (-80, 0, 0))]]),
-        ("Flight controller onto the floor, through the saddle window",
-         [[("Flight controller", (0, 0, 150))]]),
-        ("ESC into the motor cone, close to the motor",
-         [[("ESC", (95, 0, 37))]]),
-        ("Two 4S3P battery packs in through the hatch",
-         [[("Battery pack 1", (0, 0, 130))], [("Battery pack 2", (0, 0, 130))]]),
-        ("VTX, receiver and GPS on top of the packs",
-         [[("VTX", (0, 0, 80))], [("Receiver", (0, 0, 80))], [("GPS", (0, 0, 80))]]),
+    ("Electronics", (-820, -170, 520), (190, 0, 50), 30, [
+        ("Elevator and rudder servos upright between the floor rails",
+         [[("Elevator servo", (0, 0, 110)), ("Rudder servo", (0, 0, 110))]]),
+        ("Flight controller, then the ESC on top of it",
+         [[("Flight controller", (0, 0, 150))], [("ESC", (0, 0, 150))]]),
+        ("Slide the 4S LiPo in along the floor from the front",
+         [[("Battery", (-160, 0, 0))]]),
+        ("VTX, receiver and GPS on top of the battery",
+         [[("VTX", (-90, 0, 30))], [("Receiver", (0, 0, 80))], [("GPS", (0, 0, 80))]]),
+        ("About 92 g of lead in the nose, then the camera, then slide the nose on",
+         [[("Nose weight", (-90, 0, 0))], [("FPV camera", (-80, 0, 0)), ("fuse_1_nose", (-80, 0, 0))]]),
         ("Close the hatch: front tab under the skin first",
          [[("fuse_hatch", (35, 0, 55))]]),
     ]),
     ("Motor", (-700, -560, 480), (450, 0, 110), 26, [
         ("Glue in the motor mount with its four M3 × 14 screws",
-         [[("motor_mount", (70, 0, 0))] + [(f"Motor screw {s}", (70, 0, 0))
-                                           for s in ("+8/+0.0", "-8/+0.0", "+0/+9.5", "+0/-9.5")]]),
-        ("Mount the motor, then the 7-inch pusher prop",
+         [[("motor_mount", (70, 0, 0))] + [(f"Motor screw {dy:+.1f}/{dz:+.1f}", (70, 0, 0))
+                                           for dy, dz in MOTOR_HOLES]]),
+        ("Mount the motor, then the 7-inch prop",
          [[("Motor", (90, 0, 0))], [("Propeller", (90, 0, 0))]]),
     ]),
     ("Boom and tail", (-650, -700, 560), (700, 0, 40), 27, [
@@ -140,8 +141,8 @@ STEPS = [
          [[("Boom", (230, 0, 0))]]),
         ("Push the tail hub onto the boom, fin square to the table",
          [[("tail_fin_hub", (130, 0, 0))]]),
-        ("Servos into the fin pockets: elevator left, rudder right",
-         [[("Elevator servo", (0, -60, 0)), ("Rudder servo", (0, 60, 0))]]),
+        ("Thread the two Bowden cables from the servos through the boom",
+         [[("Elevator Bowden cable", (0, 0, 60)), ("Rudder Bowden cable", (0, 0, 60))]]),
         ("Stab spar and pin through the hub",
          [[("Stab spar", (0, 160, 0))], [("Stab pin", (0, 130, 0))]]),
         ("Slide on both stab halves",
@@ -150,6 +151,9 @@ STEPS = [
          [[("Elevator joiner", (0, 130, 0))], [("tail_elevator_R", (0, 80, 0)), ("tail_elevator_L", (0, -80, 0))]]),
         ("Hinge the rudder",
          [[("tail_rudder", (60, 0, 0))]]),
+        ("Horns on the elevator and rudder, Z-bend the pushrods into them",
+         [[("Elevator horn", (0, 0, -40)), ("Rudder horn", (0, 40, 0))],
+          [("Elevator pushrod ends", (0, -40, 0)), ("Rudder pushrod ends", (0, 40, 0))]]),
     ]),
     ("Wing", (-930, -90, 600), (300, 0, 110), 44, [
         ("Seat the centre section in the saddle",
@@ -160,7 +164,7 @@ STEPS = [
          [[("Main spar", (0, 540, 0))], [("Rear spar R", (0, 330, 0)), ("Rear spar L", (0, -330, 0))]]),
         ("Glue panel S1 onto the spars on each side",
          [[("wing_s1_R", (0, 150, 0)), ("wing_s1_L", (0, -150, 0))]]),
-        ("Panel S2, then the aileron servos into its pockets",
+        ("Panel S2, then a 9 g servo flat in each pocket",
          [[("wing_s2_R", (0, 150, 0)), ("wing_s2_L", (0, -150, 0))],
           [("Aileron servo R", (0, 0, -70)), ("Aileron servo L", (0, 0, -70))]]),
         ("Panel S3",
@@ -171,6 +175,9 @@ STEPS = [
          [[("Aileron joiner R", (0, 120, 0)), ("Aileron joiner L", (0, -120, 0))],
           [("aileron_inner_R", (60, 0, 0)), ("aileron_outer_R", (60, 0, 0)),
            ("aileron_inner_L", (60, 0, 0)), ("aileron_outer_L", (60, 0, 0))]]),
+        ("Aileron horns and pushrods to the servos",
+         [[("Aileron horn R", (0, 0, -40)), ("Aileron horn L", (0, 0, -40)),
+           ("Aileron pushrod R", (0, 0, -40)), ("Aileron pushrod L", (0, 0, -40))]]),
     ]),
 ]
 INTRO, MOVE, OVERLAP, HOLD, OUTRO = 6.0, 1.9, 0.45, 0.8, 7.0
@@ -212,7 +219,7 @@ def build_timeline():
     shots.append((t,) + SHOT_OUTRO)
     end = t + OUTRO
     captions.append(Caption(t, end, "Done", len(STEPS) + 1,
-                            "Balance it at 66 mm behind the wing's leading edge, then range-check"))
+                            "Balance at 66 mm behind the leading edge with lead in the nose, then range-check"))
     return moves, captions, shots, end
 
 
