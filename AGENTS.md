@@ -11,8 +11,9 @@ Code-CAD for a 1290 mm 3D-printed pusher RC plane, split into parts that fit a B
 3. `.venv/bin/python cad/check_print.py`: overhang report. Exits non-zero on a printability regression.
 4. `.venv/bin/python cad/export_web.py`: `manual/index.html` and `manual/models.json`.
 5. `.venv/bin/python aero/report.py`: `AERODYNAMICS.md` and `aero/figures/` (~1 min). Needed when the wing, tail, mass or CG changes.
+6. `.venv/bin/python cad/video.py`: `video/pusher_1290_assembly.mp4` (~1 min). The assembly order and captions live in `STEPS` in that file; a part or component missing from `STEPS` fails the render. Check a few frames first with `--stills 10,50,90`.
 
-Done means all five ran clean and `git status` shows the regenerated outputs alongside the source change. Prose numbers in `README.md` (CG, L/D, masses) are hand-copied from these outputs; update them when they move.
+Done means all six ran clean and `git status` shows the regenerated outputs alongside the source change. Prose numbers in `README.md` (CG, L/D, masses) are hand-copied from these outputs; update them when they move.
 
 ## Invariants
 
@@ -28,4 +29,4 @@ Done means all five ran clean and `git status` shows the regenerated outputs alo
 - AeroSandbox's VLM goes singular on the upswept tips above `spanwise_resolution=6`. Keep it at 6; `analysis.stability()` asserts a plausible lift slope to catch this.
 - Pushing over HTTPS fails for `.github/workflows/` changes (the `gh` token lacks `workflow` scope). Push over SSH: `git push git@github.com:hasauino/pusher_1290.git main`.
 - Every push to `main` republishes the manual to https://hassan.umari.dev/pusher_1290/ via `.github/workflows/pages.yml`.
-- The Claude Artifact copy of the manual is https://claude.ai/artifact/D5UTsCGfX7Q4rfTPNguRrU. Republish it from `manual/index.html` with `models.json` after regenerating.
+- The Claude Artifact copy of the manual is https://claude.ai/artifact/D5UTsCGfX7Q4rfTPNguRrU. Republish it from `manual/index.html` with `models.json`, `assembly.mp4` and `assembly-poster.jpg` after regenerating. That host caps each supporting file at 15 MB, which is why the manual uses a 720p copy of the video (`cad/video.py` makes it and fails if it grows past the cap).

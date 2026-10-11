@@ -170,6 +170,9 @@ ul.clean li::marker { color: var(--ink-2); }
 .step p { color: var(--ink-2); font-size: 0.9rem; }
 .build-view { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 68px); }
 .stage-build { height: clamp(300px, 44vw, 520px); }
+.video { margin: 0; display: grid; gap: 8px; min-width: 0; }
+.video video { display: block; width: 100%; aspect-ratio: 16 / 9; border-radius: var(--radius); background: var(--stage); }
+.video figcaption { color: var(--ink-2); font-size: 0.85rem; max-width: 80ch; }
 
 .figures { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
 .figure { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; display: grid; gap: 4px; }
@@ -405,8 +408,14 @@ footer .wrap { display: grid; gap: 8px; }
     <div class="section-head">
       <span class="eyebrow">Assembly</span>
       <h2>Six steps from parts to plane</h2>
-      <p>Select a step to highlight its parts. Medium CA or 5-minute epoxy works for every glue joint.</p>
+      <p>Watch the whole build, or select a step below to highlight its parts. Medium CA or 5-minute epoxy works for every glue joint.</p>
     </div>
+    <figure class="video">
+      <video controls preload="metadata" playsinline poster="assembly-poster.jpg">
+        <source src="assembly.mp4" type="video/mp4">
+      </video>
+      <figcaption>The whole build in 1 min 45 s, seen from the workbench. The video builds the fuselage first and fits the wing last; the six steps below join the same parts in a different order, and either order works.</figcaption>
+    </figure>
     <div class="build">
       <ol class="steps" id="steps">
         <li><button type="button" class="step" data-parts="wing_center wing_s wing_tip" data-group="Wing" aria-pressed="true">

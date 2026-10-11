@@ -20,6 +20,7 @@ This is an original parametric airframe with the same layout as the Flightory La
 
 - `stl/` – one STL per part, already oriented and centred for the A1 mini. Load them into Bambu Studio as they are. `stl/PARTS.md` lists each part's size on the bed, material and notes.
 - `assembly/pusher_1290_full.3mf` – the complete plane: every printed part plus carbon, bolts, servos, motor, prop, battery and avionics, each a named, coloured object. `pusher_1290_full.stl` is the same as one mesh; `pusher_1290.stl` is the printed parts only.
+- `video/pusher_1290_assembly.mp4` – a 1 min 45 s assembly video from the builder's seat: every part starts laid out on the bench and goes on in order, with captions. `.venv/bin/python cad/video.py` re-renders it.
 - `renders/` – previews. `parts_sheet.png` shows every part as it sits on the bed.
 - `cad/` – the Python source. Every dimension is in `cad/params.py`.
 - `manual/` – the interactive build manual (3D viewer, bill of materials, steps), live at **[hassan.umari.dev/pusher_1290](https://hassan.umari.dev/pusher_1290/)**. `.venv/bin/python cad/export_web.py` regenerates it from the CAD; `.github/workflows/pages.yml` rebuilds and republishes it on every push to `main`.

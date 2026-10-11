@@ -83,6 +83,8 @@ def write_site(site):
     page = STANDALONE_HEAD + body[:head_end] + "</head>\n<body>\n" + body[head_end:] + "\n</body>\n</html>\n"
     (site / "index.html").write_text(page)
     shutil.copy(OUT, site / "models.json")
+    for name in ("assembly.mp4", "assembly-poster.jpg"):    # made by cad/video.py
+        shutil.copy(MANUAL / name, site / name)
     (site / ".nojekyll").write_text("")
 
 
