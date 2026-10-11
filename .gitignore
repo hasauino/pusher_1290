@@ -1,0 +1,13 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# OS / editors
+.DS_Store
+.vscode/
+.idea/
+
+# Flightory's product renders, used only as visual reference. They are
+# Flightory's copyright and not part of this design.
+/*.webp

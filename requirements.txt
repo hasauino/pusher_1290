@@ -1,0 +1,6 @@
+AeroSandbox==4.2.10
+manifold3d==3.5.4
+matplotlib==3.11.2
+NeuralFoil==0.3.3
+numpy==2.4.6
+pillow==12.3.0
