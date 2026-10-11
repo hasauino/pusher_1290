@@ -12,11 +12,11 @@ import numpy as np
 sys.path.insert(0, str(Path(__file__).parent))
 
 import fuselage  # noqa: E402
+import hardware  # noqa: E402
 import tail  # noqa: E402
 import wing  # noqa: E402
-from geom import box, cyl_x, mesh_arrays, rot_x, rot_z, transform, union, write_stl  # noqa: E402
-from params import (BED, BED_MARGIN, BOOM_D, BOOM_Z, HUB_X0, MOTOR_X, MOTOR_Z,  # noqa: E402
-                    SOCKET_END_X)
+from geom import mesh_arrays, rot_z, transform, union, write_stl  # noqa: E402
+from params import BED, BED_MARGIN  # noqa: E402
 from PIL import Image, ImageDraw  # noqa: E402
 
 from render import render  # noqa: E402
@@ -42,16 +42,6 @@ def place_on_bed(man):
     man = man.translate((BED / 2 - (b[0] + b[3]) / 2, BED / 2 - (b[1] + b[4]) / 2, -b[2]))
     b = man.bounding_box()
     return man, (b[3] - b[0], b[4] - b[1], b[5] - b[2])
-
-
-def hardware_preview():
-    """Bought parts, only for the renders: boom, motor, 7" prop."""
-    carbon, metal = (0.12, 0.12, 0.13), (0.30, 0.30, 0.33)
-    boom = cyl_x(SOCKET_END_X, HUB_X0, 0, BOOM_Z, BOOM_D / 2)
-    motor = cyl_x(MOTOR_X + 2, MOTOR_X + 30, 0, MOTOR_Z, 17)
-    blade = box(MOTOR_X + 36, -89, MOTOR_Z - 7, MOTOR_X + 39, 89, MOTOR_Z + 7)
-    blade = transform(blade.translate((0, 0, -MOTOR_Z)), rot_x(60)).translate((0, 0, MOTOR_Z))
-    return [(boom, carbon), (motor, metal), (blade, carbon)]
 
 
 def parts_sheet(printed, path, cols=6, tile=300):
@@ -90,7 +80,7 @@ def main():
         if not fits(dims):
             failures.append(f"{p.name}: {dims[0]:.1f} x {dims[1]:.1f} x {dims[2]:.1f}")
 
-    write_stl(union([p.assembly for p in parts]), asm_dir / "lark_assembly.stl")
+    write_stl(union([p.assembly for p in parts]), asm_dir / "pusher_1290.stl")
 
     with open(stl_dir / "PARTS.md", "w") as f:
         f.write("| File | Material | X x Y x Z on bed (mm) | Solid-model mass* (g) | Notes |\n")
@@ -101,7 +91,7 @@ def main():
                 "fuselage shells are modelled at their true wall thickness, so they come out close "
                 "to this figure; solid parts (tips, tail, ailerons) print far lighter at 8-10 % infill.\n")
 
-    items = [(p.assembly, p.color) for p in parts] + hardware_preview()
+    items = [(p.assembly, p.color) for p in parts] + [(c.shape, c.color) for c in hardware.components()]
     render(items, (-1, 1.3, -0.8), (0, 0, 1), img_dir / "iso_front.png")
     render(items, (1, -1.2, -0.7), (0, 0, 1), img_dir / "iso_rear.png")
     render(items, (0, 0, -1), (-1, 0, 0), img_dir / "top.png")

@@ -17,6 +17,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 import build  # noqa: E402
 import fuselage  # noqa: E402
+import hardware  # noqa: E402
 import tail  # noqa: E402
 import wing  # noqa: E402
 from geom import mesh_arrays  # noqa: E402
@@ -101,9 +102,9 @@ def main():
             "dims": [round(d, 1) for d in dims],
             "grams": round(cm3 * rho), "grams_pla": round(cm3 * (PETG if p.material == "PETG" else PLA)),
             "asm": pack(p.assembly), "bed": pack(on_bed)})
-    names = ["Carbon boom 12 mm", "Motor", "Propeller 7 in"]
-    for (man, rgb), n in zip(build.hardware_preview(), names):
-        out["hardware"].append({"name": n, "color": hex_color(rgb), "asm": pack(man)})
+    for c in hardware.components():
+        out["hardware"].append({"name": c.name, "spec": c.spec, "group": c.group, "color": hex_color(c.color),
+                                "asm": pack(c.shape)})
     MANUAL.mkdir(exist_ok=True)
     OUT.write_text(json.dumps(out, separators=(",", ":")))
     render_page(out["parts"])

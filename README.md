@@ -19,7 +19,7 @@ This is an original parametric airframe with the same layout as the Flightory La
 ## Files
 
 - `stl/` – one STL per part, already oriented and centred for the A1 mini. Load them into Bambu Studio as they are. `stl/PARTS.md` lists each part's size on the bed, material and notes.
-- `assembly/lark_assembly.stl` – the whole plane assembled, for reference.
+- `assembly/pusher_1290_full.3mf` – the complete plane: every printed part plus carbon, bolts, servos, motor, prop, battery and avionics, each a named, coloured object. `pusher_1290_full.stl` is the same as one mesh; `pusher_1290.stl` is the printed parts only.
 - `renders/` – previews. `parts_sheet.png` shows every part as it sits on the bed.
 - `cad/` – the Python source. Every dimension is in `cad/params.py`.
 - `manual/` – the interactive build manual (3D viewer, bill of materials, steps), live at **[hassan.umari.dev/pusher_1290](https://hassan.umari.dev/pusher_1290/)**. `.venv/bin/python cad/export_web.py` regenerates it from the CAD; `.github/workflows/pages.yml` rebuilds and republishes it on every push to `main`.
@@ -54,13 +54,14 @@ Use **Bambu PLA Aero** (or another LW-PLA) unless the part is marked PETG.
 | Item | Qty / size |
 |---|---|
 | Carbon tube 10 mm OD (main spar) | 1 × 1000 mm |
-| Carbon tube 6 mm OD (rear spar) | 2 × 600 mm (meet at the centreline) |
+| Carbon tube 6 mm OD (rear spar) | 2 × 590 mm (meet at the centreline) |
 | Carbon tube 12 mm OD (boom) | 1 × 490 mm |
 | Carbon tube 6 mm OD (stab spar) | 1 × 130 mm |
 | Carbon rod 3 mm (stab pin) | 1 × 80 mm |
 | Carbon rod 3 mm (aileron joiners) | 2 × 80 mm |
 | Piano wire or carbon rod 2 mm (elevator joiner) | 1 × 100 mm |
-| M3 heat-set inserts + bolts (wing) | 2 inserts, 1 × M3×20 (front), 1 × M3×16 (rear) |
+| M3 heat-set inserts + bolts (wing) | 2 inserts, 1 × M3×20 (front), 1 × M3×14 (rear) |
+| M3 bolts (motor) | 4 × M3×14 |
 | Servos, EMAX ES08MA II or same size | 4: 2 ailerons, elevator, rudder (the rudder is optional) |
 | Hinges (polyester/CA, or hinge tape) | ~14 |
 | Control horns, 1.2 mm pushrods | 4 |
@@ -69,7 +70,7 @@ Use **Bambu PLA Aero** (or another LW-PLA) unless the part is marked PETG.
 
 **Check the motor mount before printing it.** `motor_mount.stl` has a 16 × 19 mm M3 cross pattern and a 10 mm centre hole. If your motor uses a different pattern, change the holes in `fuselage.motor_mount()`.
 
-**Battery bay:** the flat floor is about 80 mm wide (100 mm higher up) and about 150 mm long, and the bay continues under the wing saddle. A 4S Li-ion pack about 75 × 56 × 130 mm (for example 4S6P 18650) fits.
+**Battery bay:** the flat floor is about 80 mm wide (100 mm higher up) and about 150 mm long, and the bay continues under the wing saddle. For a 4S6P battery use **two 4S3P 18650 packs in parallel** (each about 75 × 56 × 65 mm): a single 130 mm pack is longer than the 98 mm hatch opening. Both packs, the electronics and every servo are checked for fit in `cad/assembly.py`.
 
 ## Assembly
 

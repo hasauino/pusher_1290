@@ -217,8 +217,8 @@ def write_report(before, after, foils, re, trades):
         "Lark's 1290 mm, the remaining levers are weight (induced drag goes with weight²: 10% lighter means about "
         "19% less induced drag) and span.",
         "- **Wing profile drag comes next.** The airfoil change cut it. See below.",
-        "- **The pod** is about an eighth of the drag. It is sized by the battery bay (a 4S6P pack is about "
-        "75 × 56 × 130 mm), and its length-to-width ratio of about 3.7 is close to the lowest-drag value for the "
+        "- **The pod** is about an eighth of the drag. It is sized by the battery bay (two 4S3P packs, each about "
+        "75 × 56 × 65 mm), and its length-to-width ratio of about 3.7 is close to the lowest-drag value for the "
         "volume it holds.",
         "- **The tail** (stabiliser, fin, boom and hub) is about 12%. The tail volume (0.50 horizontal, "
         "0.030 vertical) is normal, so shrinking it would save little and cost stability.",

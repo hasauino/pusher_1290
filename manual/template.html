@@ -273,14 +273,15 @@ footer .wrap { display: grid; gap: 8px; }
           <thead><tr><th>Carbon and hardware</th><th>Quantity</th></tr></thead>
           <tbody>
             <tr><td>Carbon tube 10 mm OD, main spar</td><td>1 × 1000 mm</td></tr>
-            <tr><td>Carbon tube 6 mm OD, rear spar</td><td>2 × 600 mm</td></tr>
+            <tr><td>Carbon tube 6 mm OD, rear spar</td><td>2 × 590 mm</td></tr>
             <tr><td>Carbon tube 12 mm OD, tail boom</td><td>1 × 490 mm</td></tr>
             <tr><td>Carbon tube 6 mm OD, stabiliser spar</td><td>1 × 130 mm</td></tr>
             <tr><td>Carbon rod 3 mm, stabiliser pin</td><td>1 × 80 mm</td></tr>
             <tr><td>Carbon rod 3 mm, aileron joiners</td><td>2 × 80 mm</td></tr>
             <tr><td>Piano wire or carbon rod 2 mm, elevator joiner</td><td>1 × 100 mm</td></tr>
             <tr><td>M3 heat-set inserts</td><td>2</td></tr>
-            <tr><td>M3 × 20 and M3 × 16 bolts (wing)</td><td>1 each</td></tr>
+            <tr><td>M3 × 20 and M3 × 14 bolts (wing)</td><td>1 each</td></tr>
+            <tr><td>M3 × 14 bolts (motor)</td><td>4</td></tr>
             <tr><td>Polyester or CA hinges</td><td>~14</td></tr>
             <tr><td>Control horns and 1.2 mm pushrods</td><td>4 each</td></tr>
             <tr><td>Magnet 6 × 3 mm (hatch)</td><td>1</td></tr>
@@ -299,7 +300,7 @@ footer .wrap { display: grid; gap: 8px; }
             <tr><td>GPS</td><td>M10 with compass</td></tr>
             <tr><td>Receiver</td><td>ELRS or similar</td></tr>
             <tr><td>Camera and VTX</td><td>19 × 19 mm camera, digital or analog VTX</td></tr>
-            <tr><td>Battery</td><td>4S Li-ion, up to 4S6P 18650 (~75 × 56 × 130 mm)</td></tr>
+            <tr><td>Battery</td><td>2 × 4S3P 18650 packs in parallel (each ~75 × 56 × 65 mm, to fit through the hatch)</td></tr>
           </tbody>
         </table>
       </div>
@@ -352,7 +353,7 @@ footer .wrap { display: grid; gap: 8px; }
     </div>
     <div class="build">
       <ol class="steps" id="steps">
-        <li><button type="button" class="step" data-parts="wing_center wing_s wing_tip" aria-pressed="true">
+        <li><button type="button" class="step" data-parts="wing_center wing_s wing_tip" data-group="Wing" aria-pressed="true">
           <h3>Build the wing</h3>
           <p>Slide the 10 mm main spar and both 6 mm rear spars through the centre section, then S1, S2 and S3 on each side, gluing each joint. Glue the tips on; the rear spars end 35 mm inside them. Lay the aileron servos flat in the pockets under S2 and run the leads through the wing to the holes under the centre section.</p>
         </button></li>
@@ -360,21 +361,21 @@ footer .wrap { display: grid; gap: 8px; }
           <h3>Fit the ailerons</h3>
           <p>Glue a 3 mm carbon rod through the inner and outer aileron on each side so they move as one. Hinge them along the point of the bevel, which allows ±30° of throw, then tape over the hinge gap.</p>
         </button></li>
-        <li><button type="button" class="step" data-parts="fuse_ motor_mount" aria-pressed="false">
+        <li><button type="button" class="step" data-parts="fuse_ motor_mount" data-group="Fuselage" aria-pressed="false">
           <h3>Assemble the fuselage</h3>
           <p>Glue the front and rear segments and both tail-cone pieces together on their 10 mm sleeves. Leave the nose unglued so you can reach the camera. Melt the two M3 inserts into the bosses under the wing saddle. Bolt the motor to the mount, then glue the mount into the cone.</p>
         </button></li>
-        <li><button type="button" class="step" data-parts="fuse_4_tail_boom_socket tail_fin_hub" data-hw="Carbon boom 12 mm" aria-pressed="false">
+        <li><button type="button" class="step" data-parts="fuse_4_tail_boom_socket tail_fin_hub" data-group="Boom" aria-pressed="false">
           <h3>Fit the boom</h3>
           <p>Glue the 12 mm boom 160 mm into the fuselage socket and 110 mm into the tail hub. Square the fin to the wing before the glue sets. Tail servo leads run inside the boom.</p>
         </button></li>
-        <li><button type="button" class="step" data-parts="tail_" aria-pressed="false">
+        <li><button type="button" class="step" data-parts="tail_" data-group="Tail" aria-pressed="false">
           <h3>Build the tail</h3>
           <p>Slide the stabiliser halves onto the 6 mm spar and 3 mm pin through the hub. Hinge the elevators and join them with the 2 mm rod through the hub slot, then hinge the rudder. The elevator servo goes in the left fin pocket and the rudder servo in the right.</p>
         </button></li>
         <li><button type="button" class="step" data-parts="*" aria-pressed="false">
           <h3>Mount the wing and balance</h3>
-          <p>Seat the wing in the saddle with the M3 × 20 bolt at the front and the M3 × 16 at the back. Hook the hatch's front tab under the skin and press its back onto the ledge. Balance the plane at 66 mm behind the wing's leading edge.</p>
+          <p>Seat the wing in the saddle with the M3 × 20 bolt at the front and the M3 × 14 at the back. Hook the hatch's front tab under the skin and press its back onto the ledge. Balance the plane at 66 mm behind the wing's leading edge.</p>
         </button></li>
       </ol>
       <div class="build-view">
@@ -493,14 +494,14 @@ footer .wrap { display: grid; gap: 8px; }
 
   function buildAssembly(viewer, data) {
     const items = [];
-    const add = (name, label, m, color, hardware) => {
+    const add = (name, label, m, color, hardware, group) => {
       const mesh = new THREE.Mesh(geometry(m), solid(color));
-      mesh.userData = { name, label, color, hardware };
+      mesh.userData = { name, label, color, hardware, group };
       viewer.scene.add(mesh);
       items.push(mesh);
     };
-    data.parts.forEach(p => add(p.name, p.file, p.asm, p.color, false));
-    data.hardware.forEach(h => add("hw:" + h.name, h.name, h.asm, h.color, true));
+    data.parts.forEach(p => add(p.name, p.file, p.asm, p.color, false, p.group));
+    data.hardware.forEach(h => add("hw:" + h.name, `${h.name} · ${h.spec}`, h.asm, h.color, true, h.group));
     const box = new THREE.Box3();
     items.forEach(m => box.union(m.geometry.boundingBox));
     viewer.fit(box);
@@ -513,12 +514,12 @@ footer .wrap { display: grid; gap: 8px; }
     const c = box.getCenter(new THREE.Vector3());
     return items.map(m => {
       const b = m.geometry.boundingBox.getCenter(new THREE.Vector3());
-      const n = m.userData.name, off = new THREE.Vector3();
-      if (n.startsWith("wing") || n.startsWith("aileron")) off.set(0, (b.y - c.y) * 0.35, 170);
-      else if (n.startsWith("tail")) off.set(90, (b.y - c.y) * 0.6, 50 + (b.z - 30) * 0.4);
-      else if (n.startsWith("fuse_hatch")) off.set(0, 0, 110);
-      else if (n.startsWith("fuse") || n === "motor_mount") off.set((b.x - 250) * 0.35, 0, 0);
-      else if (n.startsWith("hw:")) off.set(n.includes("boom") ? 50 : (b.x - 250) * 0.35, 0, 0);
+      const { name, group } = m.userData, off = new THREE.Vector3();
+      if (group === "Wing") off.set(0, (b.y - c.y) * 0.35, 170);
+      else if (group === "Tail") off.set(90, (b.y - c.y) * 0.6, 50 + (b.z - 30) * 0.4);
+      else if (group === "Boom") off.set(50, 0, 0);
+      else if (name === "fuse_hatch") off.set(0, 0, 110);
+      else off.set((b.x - 250) * 0.35, 0, 0);
       return off;
     });
   }
@@ -634,10 +635,10 @@ footer .wrap { display: grid; gap: 8px; }
       const keys = btn.dataset.parts.split(" ");
       const all = keys.includes("*");
       document.querySelectorAll(".step").forEach(s => s.setAttribute("aria-pressed", s === btn));
-      const hw = btn.dataset.hw ? "hw:" + btn.dataset.hw : null;
+      const group = btn.dataset.group;
       buildItems.forEach(m => {
-        const n = m.userData.name;
-        const on = keys.some(k => k && n.startsWith(k)) || n === hw;
+        const { name: n, hardware, group: g } = m.userData;
+        const on = keys.some(k => k && n.startsWith(k)) || (hardware && g === group);
         m.userData.own = m.userData.own || m.material;
         m.material = all ? m.userData.own : on ? highlight : ghost;
       });

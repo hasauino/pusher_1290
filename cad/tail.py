@@ -15,6 +15,9 @@ COLOR = (0.66, 0.66, 0.64)
 SURFACE_COLOR = (0.48, 0.50, 0.53)
 STAB = Airfoil.naca00(STAB_THICK)
 FIN = Airfoil.naca00(FIN_THICK)
+# Servo pockets in the fin: (x0, z0, side), side -1 = left (elevator), +1 = right (rudder).
+ELEV_SERVO_POCKET = (728.0, 44.0, -1)
+RUDDER_SERVO_POCKET = (750.0, 74.0, 1)
 XZ_TO_ASSEMBLY = np.array([[1.0, 0, 0], [0, 0, 1], [0, 1, 0]])   # 2D (x, z) extruded along y
 YZ_TO_ASSEMBLY = np.array([[0.0, 0, 1], [1, 0, 0], [0, 1, 0]])   # 2D (y, z) extruded along x
 
@@ -73,12 +76,18 @@ def fin_half_thickness(x, z):
     return float(FIN.half_thickness(x - le, TAIL_TE_X - le, TE_THICK))
 
 
+def pocket_floor(x0, z0, side):
+    """Y of the pocket floor: the face the servo lies against."""
+    pc, ps, pd = SERVO_POCKET
+    return side * (fin_half_thickness(x0 + ps / 2, z0 + pc / 2) - pd)
+
+
 def servo_pocket(x0, z0, side):
     """Pocket for a servo lying against the fin side (side -1 = left)."""
     pc, ps, pd = SERVO_POCKET
     x1, z1 = x0 + ps, z0 + pc
     ht_min = min(fin_half_thickness(x, z) for x in (x0, x1) for z in (z0, z1))
-    floor = side * (fin_half_thickness((x0 + x1) / 2, (z0 + z1) / 2) - pd)
+    floor = pocket_floor(x0, z0, side)
     wall = ht_min + side * floor      # material left on the far side of the fin
     assert wall > 2.5, f"servo pocket leaves only {wall:.1f} mm of fin"
     y0, y1 = (floor, 40) if side > 0 else (-40, floor)
@@ -106,7 +115,7 @@ def parts():
     body = body - stab_pitch(box(ELEV_JOINER_X - 1.5, -20, STAB_Z - slot_h, ELEV_JOINER_X + 1.5, 20, STAB_Z + slot_h)
                              + cyl_y(-20, 20, ELEV_JOINER_X, STAB_Z - slot_h, 1.5)
                              + cyl_y(-20, 20, ELEV_JOINER_X, STAB_Z + slot_h, 1.5))
-    body = body - servo_pocket(728, 44, -1) - servo_pocket(750, 74, 1)
+    body = body - servo_pocket(*ELEV_SERVO_POCKET) - servo_pocket(*RUDDER_SERVO_POCKET)
     body = body - cyl_z(BOOM_Z, 46, 744, -3, 3.5) - cyl_z(BOOM_Z, 82, 767, 3, 3.5)
 
     s = stab_right()
