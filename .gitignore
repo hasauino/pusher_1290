@@ -11,3 +11,6 @@ __pycache__/
 # Flightory's product renders, used only as visual reference. They are
 # Flightory's copyright and not part of this design.
 /*.webp
+
+# Static site build output
+/_site/

@@ -22,7 +22,7 @@ This is an original parametric airframe with the same layout as the Flightory La
 - `assembly/lark_assembly.stl` – the whole plane assembled, for reference.
 - `renders/` – previews. `parts_sheet.png` shows every part as it sits on the bed.
 - `cad/` – the Python source. Every dimension is in `cad/params.py`.
-- `manual/` – the interactive build manual (3D viewer, bill of materials, steps). `.venv/bin/python cad/export_web.py` regenerates `manual/index.html` and `manual/models.json` from the CAD.
+- `manual/` – the interactive build manual (3D viewer, bill of materials, steps), live at **[hassan.umari.dev/pusher_1290](https://hassan.umari.dev/pusher_1290/)**. `.venv/bin/python cad/export_web.py` regenerates it from the CAD; `.github/workflows/pages.yml` rebuilds and republishes it on every push to `main`.
 - `aero/` – the aerodynamic model and analysis. `.venv/bin/python aero/report.py` regenerates [AERODYNAMICS.md](AERODYNAMICS.md) from the current parameters.
 
 To rebuild after changing a parameter:

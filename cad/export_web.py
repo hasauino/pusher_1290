@@ -1,10 +1,13 @@
 """Export every part for the web manual: assembly pose + on-bed print pose, as
-compact quantised meshes in manual/models.json.
+compact quantised meshes in manual/models.json, and fill in manual/index.html.
 
-    .venv/bin/python cad/export_web.py
+    .venv/bin/python cad/export_web.py                # manual/ (page body for Claude artifacts)
+    .venv/bin/python cad/export_web.py --site _site   # also a standalone site (GitHub Pages)
 """
+import argparse
 import base64
 import json
+import shutil
 import sys
 from pathlib import Path
 
@@ -60,7 +63,32 @@ def hex_color(rgb):
     return "#" + "".join(f"{int(round(c * 255)):02x}" for c in rgb)
 
 
+STANDALONE_HEAD = """<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+"""
+
+
+def write_site(site):
+    """manual/index.html is a page body (the artifact host adds the document
+    skeleton); a static host needs the full document."""
+    site = Path(site)
+    site.mkdir(parents=True, exist_ok=True)
+    body = (MANUAL / "index.html").read_text()
+    head_end = body.index("<nav ")
+    page = STANDALONE_HEAD + body[:head_end] + "</head>\n<body>\n" + body[head_end:] + "\n</body>\n</html>\n"
+    (site / "index.html").write_text(page)
+    shutil.copy(OUT, site / "models.json")
+    (site / ".nojekyll").write_text("")
+
+
 def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--site", help="also write a standalone static site to this folder")
+    args = ap.parse_args()
     parts = wing.parts() + fuselage.parts() + tail.parts()
     out = {"bed": build.BED, "parts": [], "hardware": []}
     for i, p in enumerate(parts, 1):
@@ -79,6 +107,8 @@ def main():
     MANUAL.mkdir(exist_ok=True)
     OUT.write_text(json.dumps(out, separators=(",", ":")))
     render_page(out["parts"])
+    if args.site:
+        write_site(args.site)
     total = sum(p["grams"] for p in out["parts"])
     print(f"{len(parts)} parts, {OUT.stat().st_size / 1e6:.1f} MB, printed mass ~{total} g LW-PLA")
 
